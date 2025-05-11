@@ -7,7 +7,6 @@ const apikey = process.env.API_KEY;
 const serverUrl = process.env.SERVER_URL;
 const instanceId = process.env.INSTANCE;
 
-
 // Função para enviar mensagem com texto para um destinatário específico e instância
 const sendMessage = async (message, recipientNumber) => {
   const url = `${serverUrl}/message/sendText/${instanceId}`;  // URL com base no server-url e instance
