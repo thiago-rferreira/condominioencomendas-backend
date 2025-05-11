@@ -1,0 +1,113 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // URL de conexão com o banco de dados
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Modelo de Condôminos
+model Condominios {
+  id                   Int             @id @default(autoincrement())
+  nome                 String
+  status               String          @default("ativo")
+  plano                String?
+  valor_plano          Int
+  quantidade_moradores Int             @default(0)
+  observacao           String?
+  contato_sindico      String?
+  nome_sindico         String?
+  data_vencimento      DateTime?
+  server_url_whatsapp  String?
+  instancia_whatsapp   String?
+  api_key_whatsapp     String?
+  sindicos             Sindicos[]
+  porteiros            Porteiros[]
+  torres_blocos        Torres_Blocos[]
+  apartamentos         Apartamentos[]
+  encomendas           Encomendas[]
+}
+
+model Sindicos {
+  id            Int         @id @default(autoincrement())
+  nome          String
+  email         String      @unique
+  usuario       String      @unique
+  senha         String
+  condominio    Condominios @relation(fields: [condominio_id], references: [id])
+  condominio_id Int
+}
+
+model Porteiros {
+  id                  Int          @id @default(autoincrement())
+  nome                String
+  codigo_acesso       String       @unique
+  condominio          Condominios  @relation(fields: [condominio_id], references: [id])
+  condominio_id       Int
+  checkin_encomendas  Encomendas[] @relation("porteiro_checkin")
+  checkout_encomendas Encomendas[] @relation("porteiro_checkout")
+}
+
+model Torres_Blocos {
+  id            Int            @id @default(autoincrement())
+  nome          String
+  condominio    Condominios    @relation(fields: [condominio_id], references: [id])
+  condominio_id Int
+  apartamentos  Apartamentos[]
+}
+
+model Apartamentos {
+  id            Int           @id @default(autoincrement())
+  numero        String
+  torre         Torres_Blocos @relation(fields: [torre_id], references: [id])
+  torre_id      Int
+  moradores     Moradores[]
+  Condominios   Condominios?  @relation(fields: [condominiosId], references: [id])
+  condominiosId Int?
+  Encomendas    Encomendas[]
+}
+
+model Moradores {
+  id                   Int            @id @default(autoincrement())
+  nome                 String
+  apartamento          Apartamentos   @relation(fields: [apartamento_id], references: [id])
+  apartamento_id       Int
+  whatsapp             String?
+  encomendas_enviadas  Encomendas[]   @relation("morador_encomenda")
+  encomendas_retiradas Encomendas[]   @relation("morador_retirada")
+  notificacoes         Notificacoes[]
+}
+
+model Encomendas {
+  id                   Int            @id @default(autoincrement())
+  codigo_retirada      String         @unique
+  descricao            String
+  data_chegada         DateTime
+  status               String         @default("pendente")
+  apartamento          Apartamentos   @relation(fields: [apartamento_id], references: [id])
+  apartamento_id       Int
+  porteiro_checkin     Porteiros      @relation("porteiro_checkin", fields: [porteiro_id_checkin], references: [id])
+  porteiro_id_checkin  Int
+  porteiro_checkout    Porteiros?     @relation("porteiro_checkout", fields: [porteiro_id_checkout], references: [id])
+  porteiro_id_checkout Int? // Tornar opcional
+  url_imagem           String?
+  morador_encomenda    Moradores      @relation("morador_encomenda", fields: [morador_id_encomenda], references: [id])
+  morador_id_encomenda Int
+  morador_retirada     Moradores?     @relation("morador_retirada", fields: [morador_id_retirada], references: [id])
+  morador_id_retirada  Int? // Tornar opcional
+  data_retirada        DateTime?
+  notificacoes         Notificacoes[]
+  Condominios          Condominios?   @relation(fields: [condominiosId], references: [id])
+  condominiosId        Int?
+}
+
+model Notificacoes {
+  id              Int        @id @default(autoincrement())
+  encomenda       Encomendas @relation(fields: [encomenda_id], references: [id])
+  encomenda_id    Int
+  morador         Moradores  @relation(fields: [morador_id], references: [id])
+  morador_id      Int
+  status_envio    String     @default("pendente")
+  codigo_retirada String
+}
