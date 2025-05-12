@@ -120,7 +120,7 @@ const sendQRCode = async (message, code, recipientNumber, qrCodeImage) => {
 //Execute primeiro send MessageWithImage e depois execute sendQRCode
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const sendOrderNotification = async (message, imageUrl, recipientNumber, code) => {
+const sendOrderNotification = async (message, imageUrl, recipientNumber, code, notificationId) => {
   try {
     // 1. Enviar mensagem com imagem
     const imageResponse = await sendMessageWithImage(message, imageUrl, recipientNumber);
@@ -136,7 +136,7 @@ const sendOrderNotification = async (message, imageUrl, recipientNumber, code) =
     // 3. Enviar o QR Code
     const qrCodeResponse = await sendQRCode(message, code, recipientNumber, qrCodeImage);
 
-    return { imageResponse, qrCodeResponse };
+    return { imageResponse, qrCodeResponse, notificationId };
 
   } catch (error) {
     console.error('Erro ao enviar imagem e QR Code:', error);

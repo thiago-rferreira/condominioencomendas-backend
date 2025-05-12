@@ -53,14 +53,14 @@ const sendQRCode = async (req, res) => {
 
 const sendOrderNotification = async (req, res) => {
   try {
-    const {message, imageUrl, recipientNumber, code} = req.body;  // Mensagem, URL da imagem, número e instância
+    const {message, imageUrl, recipientNumber, code, notificationId} = req.body;  // Mensagem, URL da imagem, número e instância
 
-    if (!recipientNumber || !imageUrl || !code || !message) {
-      return res.status(400).json({ message: 'Voce deve enviar code, recipientNumber, imageUrl, message' });
+    if (!recipientNumber || !imageUrl || !code || !message || !notificationId) {
+      return res.status(400).json({ message: 'Voce deve enviar code, recipientNumber, imageUrl, message e o notificationId' });
     }
 
     // usar o modelo para enviar a mensagem
-    const data = await evolutionModel.sendOrderNotification(message, imageUrl, recipientNumber, code);
+    const data = await evolutionModel.sendOrderNotification(message, imageUrl, recipientNumber, code, notificationId);
     res.status(200).json(data);
     
   } catch (error) {
