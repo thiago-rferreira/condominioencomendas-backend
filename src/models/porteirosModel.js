@@ -1,36 +1,36 @@
 const prisma = require('../config/prisma');
 
-const SindicosModel = {
+const PorteirosModel = {
   async listarTodos() {
-    return await prisma.sindicos.findMany({
+    return await prisma.porteiros.findMany({
       include: { condominio: true },
       orderBy: { nome: 'asc' }
     });
   },
 
   async buscarPorId(id) {
-    return await prisma.sindicos.findUnique({
+    return await prisma.porteiros.findUnique({
       where: { id: Number(id) },
       include: { condominio: true }
     });
   },
 
   async criar(dados) {
-    return await prisma.sindicos.create({ data: dados });
+    return await prisma.porteiros.create({ data: dados });
   },
 
   async atualizar(id, dados) {
-    return await prisma.sindicos.update({
+    return await prisma.porteiros.update({
       where: { id: Number(id) },
       data: dados
     });
   },
 
   async deletar(id) {
-    return await prisma.sindicos.delete({
+    return await prisma.porteiros.delete({
       where: { id: Number(id) }
     });
   }
 };
 
-module.exports = SindicosModel;
+module.exports = PorteirosModel;
