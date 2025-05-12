@@ -6,6 +6,7 @@ const apiKeyMiddleware = require('./middlewares/apiKeyMiddleware');
 const evolutionRoutes = require('./routes/evolutionRoutes');
 const encomendasRoutes = require('./routes/encomendasRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const condominiosRoutes = require('./routes/condominiosRoutes');
 
 
 // Configurar variáveis de ambiente
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use('/api/evolution', apiKeyMiddleware, evolutionRoutes);
 app.use('/api/encomendas', apiKeyMiddleware, encomendasRoutes);
 app.use('/api/upload', apiKeyMiddleware, uploadRoutes);
+app.use('/api/condominios', apiKeyMiddleware, condominiosRoutes);
 
 
 
