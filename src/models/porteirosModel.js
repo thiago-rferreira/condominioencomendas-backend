@@ -15,6 +15,14 @@ const PorteirosModel = {
     });
   },
 
+  async buscarPorCodigo(codigo) {
+    console.log('Buscando porteiro com código de acesso:', codigo);
+    return await prisma.porteiros.findUnique({
+      where: { codigo_acesso: codigo },
+      include: { condominio: true }
+    });
+  },
+
   async criar(dados) {
     return await prisma.porteiros.create({ data: dados });
   },
