@@ -4,29 +4,35 @@ const { supabase } = require('../config/supabase');
 const uploadImagem = async (req, res) => {
   try {
     const file = req.file;
-
     if (!file) return res.status(400).json({ erro: 'Imagem não enviada' });
 
-    // 🧠 Compressão estilo WhatsApp
-    const imagemComprimida = await sharp(file.buffer)
-      .resize({
-        width: 1080, // WhatsApp geralmente redimensiona para ~1080px
+    // Verifica dimensões
+    const metadata = await sharp(file.buffer).metadata();
+    let pipeline = sharp(file.buffer);
+
+    if (metadata.width > 1080) {
+      pipeline = pipeline.resize({
+        width: 1080,
         fit: sharp.fit.inside,
         withoutEnlargement: true
-      })
-      .jpeg({
-        quality: 80,              
-        chromaSubsampling: '4:2:0', 
-        mozjpeg: true             
+      });
+    }
+
+    // Comprimir para WebP
+    const imagemComprimida = await pipeline
+      .webp({
+        quality: 80,             // Compressão equilibrada
+        effort: 4,               // Nível de esforço (0–6), 4 = bom/rápido
+        smartSubsample: true     // Melhora compressão em imagens com texto
       })
       .toBuffer();
 
-    const nomeArquivo = `retirada-${Date.now()}.jpg`;
+    const nomeArquivo = `retirada-${Date.now()}.webp`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('condominio-bucket')
       .upload(nomeArquivo, imagemComprimida, {
-        contentType: 'image/jpeg',
+        contentType: 'image/webp',
         cacheControl: '3600',
         upsert: false
       });

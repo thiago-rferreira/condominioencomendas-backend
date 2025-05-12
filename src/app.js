@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+const apiKeyMiddleware = require('./middlewares/apiKeyMiddleware');
 const evolutionRoutes = require('./routes/evolutionRoutes');
 const encomendasRoutes = require('./routes/encomendasRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
@@ -16,9 +17,9 @@ const app = express();
 app.use(express.json());
 
 // Usar as rotas definidas
-app.use('/api/evolution', evolutionRoutes);
-app.use('/api/encomendas', encomendasRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api/evolution', apiKeyMiddleware, evolutionRoutes);
+app.use('/api/encomendas', apiKeyMiddleware, encomendasRoutes);
+app.use('/api/upload', apiKeyMiddleware, uploadRoutes);
 
 
 

@@ -27,12 +27,14 @@ const gerarCodigoUnico = async () => {
 };
 
 const EncomendasController = {
+  
+  
   async listar(req, res) {
     try {
       const lista = await EncomendasModel.listarTodas();
       res.json(lista);
     } catch (erro) {
-      res.status(500).json({ erro: 'Erro ao listar encomendas.' });
+      res.status(500).json({ erro: 'Erro ao listar encomendas.', erro });
     }
   },
 
