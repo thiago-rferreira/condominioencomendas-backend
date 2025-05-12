@@ -122,6 +122,19 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const sendOrderNotification = async (message, imageUrl, recipientNumber, code, notificationId) => {
   try {
+    if (!recipientNumber) {
+      throw new Error('Número de destinatário não fornecido.');
+    }
+   
+    if (!code) {
+      throw new Error('Código não fornecido.');
+    }
+    if (!notificationId) {
+      throw new Error('ID da notificação não fornecido.');
+    }
+    if (!imageUrl) {
+      imageUrl = 'https://pics.freeicons.io/uploads/icons/png/1012350441642851859-512.png'; 
+    }
     // 1. Enviar mensagem com imagem
     const imageResponse = await sendMessageWithImage(message, imageUrl, recipientNumber);
 
@@ -143,9 +156,6 @@ const sendOrderNotification = async (message, imageUrl, recipientNumber, code, n
     throw error;
   }
 };
-
-
-
 
 
 module.exports = {

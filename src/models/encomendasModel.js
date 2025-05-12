@@ -23,21 +23,11 @@ const EncomendasModel = {
   },
 
   async criarEncomenda(dadosEncomenda) {
-    const novaEncomenda = await prisma.encomendas.create({
+    return await prisma.encomendas.create({
       data: dadosEncomenda,
     });
-
-    await prisma.notificacoes.create({
-      data: {
-        encomenda_id: novaEncomenda.id,
-        morador_id: novaEncomenda.morador_id_encomenda,
-        codigo_retirada: novaEncomenda.codigo_retirada,
-      },
-    });
-
-    return novaEncomenda;
   },
-
+  
   async atualizarEncomenda(encomendaId, novosDados) {
     return await prisma.encomendas.update({
       where: { id: Number(encomendaId) },

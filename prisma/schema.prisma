@@ -27,6 +27,8 @@ model Condominios {
   torres_blocos        Torres_Blocos[]
   apartamentos         Apartamentos[]
   encomendas           Encomendas[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?       @updatedAt
 }
 
 model Sindicos {
@@ -37,6 +39,8 @@ model Sindicos {
   senha         String
   condominio    Condominios @relation(fields: [condominio_id], references: [id])
   condominio_id Int
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?       @updatedAt
 }
 
 model Porteiros {
@@ -47,6 +51,8 @@ model Porteiros {
   condominio_id       Int
   checkin_encomendas  Encomendas[] @relation("porteiro_checkin")
   checkout_encomendas Encomendas[] @relation("porteiro_checkout")
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?       @updatedAt
 }
 
 model Torres_Blocos {
@@ -55,6 +61,8 @@ model Torres_Blocos {
   condominio    Condominios    @relation(fields: [condominio_id], references: [id])
   condominio_id Int
   apartamentos  Apartamentos[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?       @updatedAt
 }
 
 model Apartamentos {
@@ -66,6 +74,8 @@ model Apartamentos {
   Condominios   Condominios?  @relation(fields: [condominiosId], references: [id])
   condominiosId Int?
   Encomendas    Encomendas[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?      @updatedAt
 }
 
 model Moradores {
@@ -77,6 +87,8 @@ model Moradores {
   encomendas_enviadas  Encomendas[]   @relation("morador_encomenda")
   encomendas_retiradas Encomendas[]   @relation("morador_retirada")
   notificacoes         Notificacoes[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?       @updatedAt
 }
 
 model Encomendas {
@@ -102,6 +114,8 @@ model Encomendas {
   condominiosId        Int?
   retirada_manual     Boolean     @default(false)
   imagem_retirada     String?     // URL da foto do morador com a encomenda
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?      @updatedAt
 }
 
 model Notificacoes {
@@ -115,5 +129,7 @@ model Notificacoes {
   codigo_retirada String
   erro_envio      String?    // salva erro se houver
   tentativas      Int        @default(0)
-  enviado_em      DateTime?
+  enviado_em      DateTime?     @default(now())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime?       @updatedAt
 }
