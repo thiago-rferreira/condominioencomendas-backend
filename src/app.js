@@ -10,6 +10,7 @@ const condominiosRoutes = require('./routes/condominiosRoutes');
 const sindicosRoutes = require('./routes/sindicosRoutes');
 const porteirosRoutes = require('./routes/porteirosRoutes');
 const torresRoutes = require('./routes/torresRoutes');
+const apartamentosRoutes = require('./routes/apartamentosRoutes');
 
 
 // Configurar variáveis de ambiente
@@ -28,6 +29,7 @@ app.use('/api/condominios', apiKeyMiddleware, condominiosRoutes);
 app.use('/api/sindicos', apiKeyMiddleware, sindicosRoutes);
 app.use('/api/porteiros', apiKeyMiddleware, porteirosRoutes);
 app.use('/api/torres', apiKeyMiddleware, torresRoutes);
+app.use('/api/apartamentos', apiKeyMiddleware, apartamentosRoutes);
 
 
 
