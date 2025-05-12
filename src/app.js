@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const evolutionRoutes = require('./routes/evolutionRoutes');
 const encomendasRoutes = require('./routes/encomendasRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
+
 
 // Configurar variáveis de ambiente
 dotenv.config();
@@ -16,6 +18,8 @@ app.use(express.json());
 // Usar as rotas definidas
 app.use('/api/evolution', evolutionRoutes);
 app.use('/api/encomendas', encomendasRoutes);
+app.use('/api/upload', uploadRoutes);
+
 
 
 // Rota base
