@@ -10,5 +10,7 @@ router.get('/:id', controller.buscar);
 router.post('/', controller.criar);
 router.put('/:id', controller.atualizar);
 router.delete('/:id', controller.deletar);
+router.get('/apartamento/:id', controller.listarPorApartamento);
+
 
 module.exports = router;

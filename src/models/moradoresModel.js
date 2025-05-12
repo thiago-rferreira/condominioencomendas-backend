@@ -34,7 +34,18 @@ const MoradoresModel = {
     return await prisma.moradores.delete({
       where: { id: Number(id) }
     });
+  },
+
+  async listarPorApartamento(apartamentoId) {
+    return await prisma.moradores.findMany({
+      where: {
+        apartamento_id: Number(apartamentoId)
+      },
+      orderBy: { nome: 'asc' }
+    });
   }
+  
+
 };
 
 module.exports = MoradoresModel;

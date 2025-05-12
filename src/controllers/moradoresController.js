@@ -4,8 +4,6 @@ const MoradoresController = {
   async listar(req, res) {
     try {
       const lista = await MoradoresModel.listarTodos();
-
-      // Renomear campo se quiser
       const resultado = lista.map((m) => {
         const { apartamento, ...resto } = m;
         return { ...resto, apartamento };
@@ -61,7 +59,18 @@ const MoradoresController = {
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao deletar morador.' });
     }
+  },
+
+  async listarPorApartamento(req, res) {
+    try {
+      const { id } = req.params;
+      const moradores = await MoradoresModel.listarPorApartamento(id);
+      res.json(moradores);
+    } catch (erro) {
+      res.status(500).json({ erro: 'Erro ao listar moradores do apartamento.' });
+    }
   }
+  
 };
 
 module.exports = MoradoresController;
