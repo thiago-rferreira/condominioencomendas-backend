@@ -5,7 +5,7 @@ const ApartamentosModel = {
     return await prisma.apartamentos.findMany({
       include: {
         torre: true,
-        condominio: true
+        Condominios: true  
       },
       orderBy: { numero: 'asc' }
     });
@@ -16,7 +16,7 @@ const ApartamentosModel = {
       where: { id: Number(id) },
       include: {
         torre: true,
-        condominio: true
+        Condominios: true  
       }
     });
   },
