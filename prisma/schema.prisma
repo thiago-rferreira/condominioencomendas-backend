@@ -100,6 +100,8 @@ model Encomendas {
   notificacoes         Notificacoes[]
   Condominios          Condominios?   @relation(fields: [condominiosId], references: [id])
   condominiosId        Int?
+  retirada_manual     Boolean     @default(false)
+  imagem_retirada     String?     // URL da foto do morador com a encomenda
 }
 
 model Notificacoes {
@@ -108,6 +110,10 @@ model Notificacoes {
   encomenda_id    Int
   morador         Moradores  @relation(fields: [morador_id], references: [id])
   morador_id      Int
-  status_envio    String     @default("pendente")
+  status_envio    String     @default("pendente") // pendente, enviado, erro
+  tipo_envio      String    @default("whatsapp")
   codigo_retirada String
+  erro_envio      String?    // salva erro se houver
+  tentativas      Int        @default(0)
+  enviado_em      DateTime?
 }
