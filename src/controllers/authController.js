@@ -32,7 +32,7 @@ const login = async (req, res) => {
         condominio_id: sindico.condominio_id
       },
       JWT_SECRET,
-      { expiresIn: '2h' }
+      { expiresIn: '30d' }
     );
 
     res.json({

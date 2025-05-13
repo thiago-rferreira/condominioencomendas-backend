@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+
+
 const apiKeyMiddleware = require('./middlewares/apiKeyMiddleware');
 const evolutionRoutes = require('./routes/evolutionRoutes');
 const encomendasRoutes = require('./routes/encomendasRoutes');
@@ -13,12 +15,14 @@ const torresRoutes = require('./routes/torresRoutes');
 const apartamentosRoutes = require('./routes/apartamentosRoutes');
 const moradoresRoutes = require('./routes/moradoresRoutes');
 const authRoutes = require('./routes/authRoutes');
+const indicadoresRoutes = require('./routes/indicadoresRoutes');
 
 
 // Configurar variáveis de ambiente
 dotenv.config();
 
 const app = express();
+app.use(cors());
 
 // Middleware para analisar JSON
 app.use(express.json());
@@ -33,6 +37,7 @@ app.use('/api/porteiros', apiKeyMiddleware, porteirosRoutes);
 app.use('/api/torres', apiKeyMiddleware, torresRoutes);
 app.use('/api/apartamentos', apiKeyMiddleware, apartamentosRoutes);
 app.use('/api/moradores', apiKeyMiddleware, moradoresRoutes);
+app.use('/api/indicadores', apiKeyMiddleware, indicadoresRoutes);
 app.use('/api/auth', authRoutes);
 
 
