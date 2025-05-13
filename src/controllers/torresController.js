@@ -53,6 +53,16 @@ const TorresController = {
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao deletar torre/bloco.' });
     }
+  },
+
+  async buscarPorCondominio(req, res) {
+    try {
+      const { condominio_id } = req.params;
+      const torres = await TorresModel.buscarPorCondominio(condominio_id);
+      res.json(torres);
+    } catch (erro) {
+      res.status(500).json({ erro: 'Erro ao buscar torres/blocos por condomínio.' });
+    }
   }
 };
 

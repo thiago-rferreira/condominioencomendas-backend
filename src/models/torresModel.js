@@ -30,6 +30,12 @@ const TorresModel = {
     return await prisma.torres_Blocos.delete({
       where: { id: Number(id) }
     });
+  },
+  async buscarPorCondominio(condominio_id) {
+    return await prisma.torres_Blocos.findMany({
+      where: { condominio_id: Number(condominio_id) },
+      include: { condominio: false }
+    });
   }
 };
 
