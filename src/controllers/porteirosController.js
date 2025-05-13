@@ -99,6 +99,17 @@ const PorteirosController = {
         } catch (erro) {
             res.status(500).json({ erro: 'Erro ao buscar porteiro.' });
         }
+    },
+
+    async buscarPorCondominio(req, res) {
+        try {
+            const { condominio_id } = req.params;
+            const porteiros = await PorteirosModel.buscarPorCondominio(condominio_id);
+            if (!porteiros || porteiros.length === 0) return res.status(404).json({ erro: 'Nenhum porteiro encontrado para este condomínio.' });
+            res.json(porteiros);
+        } catch (erro) {
+            res.status(500).json({ erro: 'Erro ao buscar porteiros.' });
+        }
     }
 };
 
