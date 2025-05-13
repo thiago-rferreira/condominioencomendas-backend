@@ -1,4 +1,5 @@
 const prisma = require('../config/prisma');
+const { buscarPorCondominio } = require('../controllers/apartamentosController');
 
 const ApartamentosModel = {
   async listarTodos() {
@@ -35,6 +36,16 @@ const ApartamentosModel = {
   async deletar(id) {
     return await prisma.apartamentos.delete({
       where: { id: Number(id) }
+    });
+  },
+
+  async buscarPorCondominio(condominioId) {
+    return await prisma.apartamentos.findMany({
+      where: { condominiosId: Number(condominioId) },
+      include: {
+        torre: true,
+        Condominios: false  
+      }
     });
   }
 };

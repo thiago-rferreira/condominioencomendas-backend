@@ -67,6 +67,16 @@ const ApartamentosController = {
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao deletar apartamento.' });
     }
+  },
+
+  async buscarPorCondominio(req, res) {
+    try {
+      const { id } = req.params;
+      const apartamentos = await ApartamentosModel.buscarPorCondominio(id);
+      res.json(apartamentos);
+    } catch (erro) {
+      res.status(500).json({ erro: 'Erro ao buscar apartamentos por condomínio.' });
+    }
   }
 };
 

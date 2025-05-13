@@ -1,4 +1,5 @@
 const prisma = require('../config/prisma');
+const { buscarPorCondominio } = require('./apartamentosModel');
 
 const EncomendasModel = {
   async listarTodas() {
@@ -27,7 +28,7 @@ const EncomendasModel = {
       data: dadosEncomenda,
     });
   },
-  
+
   async atualizarEncomenda(encomendaId, novosDados) {
     return await prisma.encomendas.update({
       where: { id: Number(encomendaId) },
@@ -40,6 +41,46 @@ const EncomendasModel = {
       where: { id: Number(encomendaId) },
     });
   },
+
+  async buscarPorCondominio(condominioId) {
+    return prisma.encomendas.findMany({
+      where: {
+        condominiosId: Number(condominioId)
+      },
+      select: {
+        id: true,
+        codigo_retirada: true,
+        descricao: true,
+        status: true,
+        data_chegada: true,
+        data_retirada: true,
+        retirada_manual: true,
+        url_imagem: true,
+        imagem_retirada: true,
+        apartamento: {
+          select: {
+            numero: true,
+            torre: {
+              select: {
+                nome: true
+              }
+            }
+          }
+        },
+        morador_encomenda: {
+          select: { nome: true }
+        },
+        porteiro_checkin: {
+          select: { nome: true }
+        },
+        porteiro_checkout: {
+          select: { nome: true }
+        } 
+      }
+    });
+  }
+
+
 };
 
 module.exports = EncomendasModel;

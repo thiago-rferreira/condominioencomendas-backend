@@ -1,6 +1,7 @@
 const EncomendasModel = require('../models/encomendasModel');
 const prisma = require('../config/prisma');
 const { notificarMoradoresDoApartamento } = require('../services/notificacaoService');
+const { buscarPorCondominio } = require('./apartamentosController');
 
 const gerarCodigoUnico = async () => {
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -27,7 +28,6 @@ const gerarCodigoUnico = async () => {
 };
 
 const EncomendasController = {
-  
   
   async listar(req, res) {
     try {
@@ -124,6 +124,22 @@ const EncomendasController = {
       res.status(500).json({ erro: 'Erro ao deletar encomenda.' });
     }
   },
+
+ async buscarPorCondominio(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({ erro: 'É necessário informar o ID do condomínio.' });
+      }
+
+      const encomendas = await EncomendasModel.buscarPorCondominio(id);
+      res.json(encomendas);
+    } catch (erro) {
+      console.error(erro);
+      res.status(500).json({ erro: 'Erro ao buscar encomendas por condomínio.' });
+    }
+  }
 };
 
 module.exports = EncomendasController;
