@@ -1,5 +1,5 @@
 const prisma = require('../config/prisma');
-const { buscarPorCondominio } = require('../controllers/apartamentosController');
+
 
 const ApartamentosModel = {
   async listarTodos() {

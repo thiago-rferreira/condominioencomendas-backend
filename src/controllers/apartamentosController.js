@@ -7,6 +7,7 @@ const ApartamentosController = {
       const lista = await ApartamentosModel.listarTodos();
       res.json(lista);
     } catch (erro) {
+      console.error(erro);
       res.status(500).json({ erro: 'Erro ao listar apartamentos.' });
     }
   },
