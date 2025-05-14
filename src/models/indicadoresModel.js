@@ -29,6 +29,7 @@ const IndicadoresModel = {
     // Quantidade de Moradores Cadastrados
     const moradoresCadastrados = await prisma.moradores.count({
       where: {
+        status: 'ativo',
         apartamento: {
             condominiosId: Number(condominioId),
         },
