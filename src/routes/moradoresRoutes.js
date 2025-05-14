@@ -11,6 +11,7 @@ router.post('/', controller.criar);
 router.put('/:id', controller.atualizar);
 router.delete('/:id', controller.deletar);
 router.get('/apartamento/:id', controller.listarPorApartamento);
+router.post('/cadastro-whatsapp', controller.criarViaWhatsApp);
 
 
 module.exports = router;

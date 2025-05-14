@@ -4,12 +4,16 @@ const MoradoresModel = {
   async listarTodos() {
     return await prisma.moradores.findMany({
       include: {
-        apartamento: true
+        apartamento: {
+          include: {
+            torre: true // Traz os dados da torre associada ao apartamento
+          }
+        }
       },
       orderBy: { nome: 'asc' }
     });
   },
-
+  
   async buscarPorId(id) {
     return await prisma.moradores.findUnique({
       where: { id: Number(id) },
@@ -43,8 +47,42 @@ const MoradoresModel = {
       },
       orderBy: { nome: 'asc' }
     });
+  },
+
+  async buscarCondominioPorCodigo(codigo_acesso) {
+    return await prisma.condominios.findUnique({
+      where: { codigo_acesso }
+    });
+  },
+
+  async buscarTorrePorNomeECondominio(nome, condominio_id) {
+    return await prisma.torres_Blocos.findFirst({
+      where: {
+        nome,
+        condominio_id
+      }
+    });
+  },
+
+  async buscarApartamentoPorNumeroETorre(numero, torre_id) {
+    return await prisma.apartamentos.findFirst({
+      where: {
+        numero,
+        torre_id
+      }
+    });
+  },
+
+  async criarViaWhatsApp({ nome, whatsapp, apartamento_id }) {
+    return await prisma.moradores.create({
+      data: {
+        nome,
+        whatsapp,
+        status: 'pendente',
+        apartamento_id
+      }
+    });
   }
-  
 
 };
 

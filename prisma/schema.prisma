@@ -10,6 +10,7 @@ generator client {
 // Modelo de Condôminos
 model Condominios {
   id                   Int             @id @default(autoincrement())
+  codigo_acesso        String?         @unique 
   nome                 String
   status               String          @default("ativo")
   plano                String?
@@ -87,6 +88,7 @@ model Moradores {
   encomendas_enviadas  Encomendas[]   @relation("morador_encomenda")
   encomendas_retiradas Encomendas[]   @relation("morador_retirada")
   notificacoes         Notificacoes[]
+  status               String         @default("ativo")
   createdAt            DateTime       @default(now())
   updatedAt            DateTime?       @updatedAt
 }
