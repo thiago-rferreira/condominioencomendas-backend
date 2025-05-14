@@ -36,6 +36,15 @@ const IndicadoresModel = {
       },
     });
 
+    const moradoresPendentes = await prisma.moradores.count({
+      where: {
+        status: 'pendente',
+        apartamento: {
+            condominiosId: Number(condominioId),
+        },
+      },
+    });
+
     // Quantidade de Apartamentos
     const apartamentos = await prisma.apartamentos.count({
       where: {
@@ -66,6 +75,7 @@ const IndicadoresModel = {
       torres,
       taxaEntrega,
       mediaMoradoresApartamento,
+      moradoresPendentes
     };
   },
 };
