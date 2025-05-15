@@ -1,5 +1,4 @@
 const prisma = require('../config/prisma');
-const { buscar, buscarPorCondominio } = require('../controllers/porteirosController');
 
 const PorteirosModel = {
   async listarTodos() {
