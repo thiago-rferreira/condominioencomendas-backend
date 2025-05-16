@@ -135,3 +135,13 @@ model Notificacoes {
   createdAt       DateTime       @default(now())
   updatedAt       DateTime?       @updatedAt
 }
+
+model ValidacaoWhatsapp {
+  id         Int      @id @default(autoincrement())
+  token      String   @unique
+  codigo     String
+  whatsapp   String
+  status     String   @default("pendente") // "pendente", "usado", "expirado"
+  criadoEm   DateTime @default(now())
+  expiradoEm DateTime
+}

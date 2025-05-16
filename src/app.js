@@ -16,6 +16,7 @@ const apartamentosRoutes = require('./routes/apartamentosRoutes');
 const moradoresRoutes = require('./routes/moradoresRoutes');
 const authRoutes = require('./routes/authRoutes');
 const indicadoresRoutes = require('./routes/indicadoresRoutes');
+const validacaoRoutes =  require('./routes/validacaoRoutes');
 
 
 // Configurar variáveis de ambiente
@@ -37,7 +38,7 @@ app.use('/api/porteiros', apiKeyMiddleware, porteirosRoutes);
 app.use('/api/torres', apiKeyMiddleware, torresRoutes);
 app.use('/api/apartamentos', apiKeyMiddleware, apartamentosRoutes);
 app.use('/api/moradores', apiKeyMiddleware, moradoresRoutes);
-app.use('/api/indicadores', apiKeyMiddleware, indicadoresRoutes);
+app.use('/api/validacao', apiKeyMiddleware, validacaoRoutes);
 app.use('/api/auth', authRoutes);
 
 
