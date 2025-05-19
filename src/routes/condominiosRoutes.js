@@ -12,5 +12,6 @@ router.get('/:id', controller.buscar);
 router.post('/', controller.criar);
 router.put('/:id', controller.atualizar);
 router.delete('/:id', controller.deletar);
+router.get('/codigo_acesso/:codigo_acesso', controller.buscarPorCodigoAcesso);
 
 module.exports = router;

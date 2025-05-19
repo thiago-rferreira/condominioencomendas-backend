@@ -49,6 +49,17 @@ const CondominiosController = {
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao deletar condomínio.' });
     }
+  },
+
+  async buscarPorCodigoAcesso (req, res) {
+    try {
+      const { codigo_acesso } = req.params;
+      const condominio = await CondominiosModel.buscarPorCodigoAcesso(codigo_acesso);
+      if (!condominio) return res.status(404).json({ erro: 'Condomínio não encontrado.' });
+      res.json(condominio);
+    } catch (erro) {
+      res.status(500).json({ erro: 'Erro ao buscar condomínio.' });
+    }
   }
 };
 

@@ -31,7 +31,13 @@ const CondominiosModel = {
     return await prisma.condominios.delete({
       where: { id: Number(id) }
     });
-  }
+  },
+
+  async buscarPorCodigoAcesso(codigo_acesso) {
+    return await prisma.condominios.findUnique({
+      where: { codigo_acesso }
+    });
+  },
 };
 
 module.exports = CondominiosModel;
