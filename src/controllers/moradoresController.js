@@ -6,6 +6,7 @@ const MoradoresController = {
       const lista = await MoradoresModel.listarTodos();
   
       const resultado = lista.map((m) => ({
+        id: m.id,
         nome: m.nome,
         apartamento_id: m.apartamento_id,
         whatsapp: m.whatsapp,
