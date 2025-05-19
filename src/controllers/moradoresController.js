@@ -36,13 +36,13 @@ const MoradoresController = {
 
   async criar(req, res) {
     try {
-      const { nome, apartamento_id, whatsapp } = req.body;
+      const { nome, apartamento_id, whatsapp, status } = req.body;
 
       if (!nome || !apartamento_id) {
         return res.status(400).json({ erro: 'nome e apartamento_id são obrigatórios.' });
       }
 
-      const novo = await MoradoresModel.criar({ nome, apartamento_id, whatsapp });
+      const novo = await MoradoresModel.criar({ nome, apartamento_id, whatsapp, status });
       res.status(201).json(novo);
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao criar morador.', detalhes: erro.message });
