@@ -40,7 +40,7 @@ app.use('/api/apartamentos', apiKeyMiddleware, apartamentosRoutes);
 app.use('/api/moradores', apiKeyMiddleware, moradoresRoutes);
 app.use('/api/validacao', apiKeyMiddleware, validacaoRoutes);
 app.use('/api/indicadores', apiKeyMiddleware, indicadoresRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', apiKeyMiddleware, authRoutes);
 
 
 // Rota base
