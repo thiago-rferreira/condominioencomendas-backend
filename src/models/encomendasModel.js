@@ -7,12 +7,6 @@ const EncomendasModel = {
         apartamento: true,
         porteiro_checkin: true,
         morador_encomenda: true,
-        porteiro_checkout: true,
-        torre: {
-          select: {
-            nome: true,
-          },
-        },
       },
     });
   },
