@@ -1,7 +1,6 @@
 const EncomendasModel = require('../models/encomendasModel');
 const prisma = require('../config/prisma');
 const { notificarMoradoresDoApartamento } = require('../services/notificacaoService');
-const { buscarPorCondominio } = require('./apartamentosController');
 
 const gerarCodigoUnico = async () => {
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
