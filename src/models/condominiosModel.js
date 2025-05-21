@@ -35,9 +35,12 @@ const CondominiosModel = {
 
   async buscarPorCodigoAcesso(codigo_acesso) {
     return await prisma.condominios.findUnique({
-      where: { codigo_acesso }
+      where: { codigo_acesso },
+      select: { id: true }
     });
-  },
+  }
+  
+  
 };
 
 module.exports = CondominiosModel;
