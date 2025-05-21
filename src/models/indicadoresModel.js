@@ -66,6 +66,16 @@ const IndicadoresModel = {
     // Média de Moradores por Apartamento
     const mediaMoradoresApartamento = apartamentos > 0 ? parseFloat((moradoresCadastrados / apartamentos).toFixed(2)) : 0;
 
+    // Trazer codigo_acesso do condominio 
+    const condominio = await prisma.condominios.findUnique({
+      where: {
+        id: Number(condominioId),
+      },
+      select: {
+        codigo_acesso: true,
+      },
+    });
+
     return {
       encomendasArmazenadas,
       encomendasEntregues,
@@ -75,7 +85,8 @@ const IndicadoresModel = {
       torres,
       taxaEntrega,
       mediaMoradoresApartamento,
-      moradoresPendentes
+      moradoresPendentes,
+      condominio
     };
   },
 };
