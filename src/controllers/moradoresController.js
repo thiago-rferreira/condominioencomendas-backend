@@ -114,6 +114,32 @@ const MoradoresController = {
       console.error(erro);
       res.status(500).json({ erro: 'Erro ao criar cadastro via WhatsApp.' });
     }
+  },
+
+  async buscarPorCondominio (req, res) {
+    console.log('Buscando moradores do condomínio...');
+    try {
+      const { condominio_id } = req.params;
+      const moradores = await MoradoresModel.buscarPorCondominio(condominio_id);
+      
+      const resultado = moradores.map((m) => ({
+        id: m.id,
+        nome: m.nome,
+        apartamento_id: m.apartamento_id,
+        whatsapp: m.whatsapp,
+        status: m.status,
+        apartamento_numero: m.apartamento?.numero,
+        torre_id: m.apartamento?.torre?.id,
+        torre_nome: m.apartamento?.torre?.nome,
+        condominiosId: m.apartamento?.condominiosId
+      }));
+    
+      res.json(resultado);
+
+    } catch (erro) {
+      console.error('Erro ao buscar moradores do condomínio:', erro);
+      res.status(500).json({ erro: 'Erro ao buscar moradores do condomínio.' });
+    }
   }
 
 };

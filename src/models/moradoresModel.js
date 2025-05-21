@@ -82,6 +82,24 @@ const MoradoresModel = {
         apartamento_id
       }
     });
+  },
+
+  async buscarPorCondominio (condominio_id) {
+    return await prisma.moradores.findMany({
+      where: {
+        apartamento: {
+          torre: { condominio_id: Number(condominio_id) }
+        }
+      },
+      include: {
+        apartamento: {
+          include: {
+            torre: true
+          }
+        }
+      },
+      orderBy: { nome: 'asc' }
+    });
   }
 
 };
