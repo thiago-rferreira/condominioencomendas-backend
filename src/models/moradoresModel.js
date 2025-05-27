@@ -101,7 +101,6 @@ const MoradoresModel = {
       orderBy: { nome: 'asc' }
     });
   }
-
 };
 
 module.exports = MoradoresModel;

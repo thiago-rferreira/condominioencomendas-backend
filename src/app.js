@@ -23,6 +23,7 @@ const validacaoRoutes =  require('./routes/validacaoRoutes');
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
 
 // Middleware para analisar JSON

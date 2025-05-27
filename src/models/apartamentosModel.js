@@ -47,6 +47,16 @@ const ApartamentosModel = {
         Condominios: false  
       }
     });
+  },
+
+  async buscarPorTorre (torreId) {
+    return await prisma.apartamentos.findMany({
+      where: { torre_id: Number(torreId) },
+      include: {
+        torre: false,
+        Condominios: false  
+      }
+    });
   }
 };
 

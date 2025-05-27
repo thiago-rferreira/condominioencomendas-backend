@@ -78,6 +78,16 @@ const ApartamentosController = {
     } catch (erro) {
       res.status(500).json({ erro: 'Erro ao buscar apartamentos por condomínio.' });
     }
+  },
+  
+  async buscarPorTorre (req, res) {
+    try {
+      const { id } = req.params;
+      const apartamentos = await ApartamentosModel.buscarPorTorre(id);
+      res.json(apartamentos);
+    } catch (erro) {
+      res.status(500).json({ erro: 'Erro ao buscar apartamentos por torre.' });
+    }
   }
 };
 

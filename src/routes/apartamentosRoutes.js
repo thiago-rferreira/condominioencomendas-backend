@@ -11,5 +11,6 @@ router.post('/', controller.criar);
 router.put('/:id', controller.atualizar);
 router.delete('/:id', controller.deletar);
 router.get('/condominio/:id', controller.buscarPorCondominio);
+router.get('/torre/:id', controller.buscarPorTorre);
 
 module.exports = router;

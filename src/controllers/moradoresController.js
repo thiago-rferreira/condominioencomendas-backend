@@ -23,7 +23,6 @@ const MoradoresController = {
     }
   },
   
-  
   async buscar(req, res) {
     try {
       const { id } = req.params;
@@ -141,7 +140,6 @@ const MoradoresController = {
       res.status(500).json({ erro: 'Erro ao buscar moradores do condomínio.' });
     }
   }
-
 };
 
 module.exports = MoradoresController;
