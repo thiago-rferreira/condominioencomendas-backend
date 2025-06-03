@@ -15,7 +15,16 @@ const EncomendasModel = {
     return await prisma.encomendas.findUnique({
       where: { id: Number(encomendaId) },
       include: {
-        apartamento: true,
+        apartamento: {
+          select: {
+            numero: true,
+            torre: {
+              select: {
+                nome: true,
+              },
+            },
+          },
+        },
         porteiro_checkin: true,
         morador_encomenda: true,
       },
