@@ -116,7 +116,6 @@ const MoradoresController = {
   },
 
   async buscarPorCondominio (req, res) {
-    console.log('Buscando moradores do condomínio...');
     try {
       const { condominio_id } = req.params;
       const moradores = await MoradoresModel.buscarPorCondominio(condominio_id);
@@ -138,6 +137,34 @@ const MoradoresController = {
     } catch (erro) {
       console.error('Erro ao buscar moradores do condomínio:', erro);
       res.status(500).json({ erro: 'Erro ao buscar moradores do condomínio.' });
+    }
+  },
+
+  async buscarPorTelefone (req, res) {
+    try {
+      const {whatsapp} = req.params;
+      if (!whatsapp) {
+        return res.status(400).json({ erro: 'Número de WhatsApp não fornecido.' });
+      }
+      const morador = await MoradoresModel.buscarPorTelefone(whatsapp);
+      if (!morador) {
+        return res.status(404).json({ erro: 'Morador não encontrado.' });
+      }
+      const resultado = {
+        id: morador.id,
+        nome: morador.nome,
+        apartamento_id: morador.apartamento_id,
+        whatsapp: morador.whatsapp,
+        status: morador.status,
+        apartamento_numero: morador.apartamento?.numero,
+        torre_id: morador.apartamento?.torre?.id,
+        torre_nome: morador.apartamento?.torre?.nome,
+        condominiosId: morador.apartamento?.condominiosId
+      };
+      res.json(resultado);
+    } catch (error) {
+      console.error('Erro ao buscar morador por telefone:', error);
+      res.status(500).json({ erro: 'Erro ao buscar morador por telefone.' });
     }
   }
 };

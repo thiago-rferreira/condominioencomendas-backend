@@ -100,6 +100,23 @@ const MoradoresModel = {
       },
       orderBy: { nome: 'asc' }
     });
+  },
+
+  async buscarPorTelefone (whatsapp) {
+    if (!whatsapp) {
+      throw new Error('Número de WhatsApp não fornecido.');
+    }
+
+    return await prisma.moradores.findFirst({
+      where: { whatsapp: String(whatsapp) },
+      include: {
+        apartamento: {
+          include: {
+            torre: true
+          }
+        }
+      }
+    });
   }
 };
 
