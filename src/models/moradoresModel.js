@@ -107,8 +107,13 @@ const MoradoresModel = {
       throw new Error('Número de WhatsApp não fornecido.');
     }
 
+    let telefoneSemDDI = whatsapp;
+    if (telefoneSemDDI.startsWith('55')) {
+      telefoneSemDDI = telefoneSemDDI.slice(2);
+    }
+
     return await prisma.moradores.findFirst({
-      where: { whatsapp: String(whatsapp) },
+      where: { whatsapp: String(telefoneSemDDI) },
       include: {
         apartamento: {
           include: {
