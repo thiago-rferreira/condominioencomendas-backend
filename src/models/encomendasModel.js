@@ -68,6 +68,7 @@ const EncomendasModel = {
         apartamento: {
           select: {
             numero: true,
+            id: true,
             torre: {
               select: {
                 nome: true
