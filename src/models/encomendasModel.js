@@ -66,6 +66,11 @@ const EncomendasModel = {
         url_imagem: true,
         imagem_retirada: true,
         morador_id_retirada: true,
+        morador_retirada: {
+          select: {
+            nome: true
+          }
+        },
         apartamento: {
           select: {
             numero: true,
