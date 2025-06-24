@@ -65,6 +65,7 @@ const EncomendasModel = {
         retirada_manual: true,
         url_imagem: true,
         imagem_retirada: true,
+        morador_id_retirada: true,
         apartamento: {
           select: {
             numero: true,
