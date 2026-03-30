@@ -1,58 +1,42 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 
-
-
-const apiKeyMiddleware = require('./middlewares/apiKeyMiddleware');
-const evolutionRoutes = require('./routes/evolutionRoutes');
-const encomendasRoutes = require('./routes/encomendasRoutes');
-const uploadRoutes = require('./routes/uploadRoutes');
-const condominiosRoutes = require('./routes/condominiosRoutes');
-const sindicosRoutes = require('./routes/sindicosRoutes');
-const porteirosRoutes = require('./routes/porteirosRoutes');
-const torresRoutes = require('./routes/torresRoutes');
-const apartamentosRoutes = require('./routes/apartamentosRoutes');
-const moradoresRoutes = require('./routes/moradoresRoutes');
-const authRoutes = require('./routes/authRoutes');
-const indicadoresRoutes = require('./routes/indicadoresRoutes');
-const validacaoRoutes =  require('./routes/validacaoRoutes');
-
-
-// Configurar variáveis de ambiente
-dotenv.config();
+import apiKeyMiddleware from './middlewares/apiKeyMiddleware.js';
+import evolutionRoutes from './routes/evolutionRoutes.js';
+import encomendasRoutes from './routes/encomendasRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
+import condominiosRoutes from './routes/condominiosRoutes.js';
+import sindicosRoutes from './routes/sindicosRoutes.js';
+import porteirosRoutes from './routes/porteirosRoutes.js';
+import torresRoutes from './routes/torresRoutes.js';
+import apartamentosRoutes from './routes/apartamentosRoutes.js';
+import moradoresRoutes from './routes/moradoresRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import indicadoresRoutes from './routes/indicadoresRoutes.js';
+import validacaoRoutes from './routes/validacaoRoutes.js';
 
 const app = express();
 
 app.use(cors());
-
-// Middleware para analisar JSON
 app.use(express.json());
 
-// Usar as rotas definidas
-app.use('/api/evolution', apiKeyMiddleware, evolutionRoutes);
-app.use('/api/encomendas', apiKeyMiddleware, encomendasRoutes);
-app.use('/api/upload', apiKeyMiddleware, uploadRoutes);
-app.use('/api/condominios', apiKeyMiddleware, condominiosRoutes);
-app.use('/api/sindicos', apiKeyMiddleware, sindicosRoutes);
-app.use('/api/porteiros', apiKeyMiddleware, porteirosRoutes);
-app.use('/api/torres', apiKeyMiddleware, torresRoutes);
-app.use('/api/apartamentos', apiKeyMiddleware, apartamentosRoutes);
-app.use('/api/moradores', apiKeyMiddleware, moradoresRoutes);
-app.use('/api/validacao', apiKeyMiddleware, validacaoRoutes);
-app.use('/api/indicadores', apiKeyMiddleware, indicadoresRoutes);
-app.use('/api/auth', apiKeyMiddleware, authRoutes);
+const api = (path, router) => app.use(`/api/${path}`, apiKeyMiddleware, router);
 
+api('evolution',    evolutionRoutes);
+api('encomendas',   encomendasRoutes);
+api('upload',       uploadRoutes);
+api('condominios',  condominiosRoutes);
+api('sindicos',     sindicosRoutes);
+api('porteiros',    porteirosRoutes);
+api('torres',       torresRoutes);
+api('apartamentos', apartamentosRoutes);
+api('moradores',    moradoresRoutes);
+api('validacao',    validacaoRoutes);
+api('indicadores',  indicadoresRoutes);
+api('auth',         authRoutes);
 
-// Rota base
-app.get('/', (req, res) => {
-  res.send('📦 API de Encomendas ativa!');
-});
+app.get('/', (_req, res) => res.send('📦 API de Encomendas ativa!'));
 
-
-// Porta do servidor
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
